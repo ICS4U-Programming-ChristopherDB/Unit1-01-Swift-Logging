@@ -27,14 +27,14 @@ var logLength: Float = 0.0
 
 // Enumerator for error messages.
 enum ErrorMessages: Error {
-    case InvalidUserChoice
+    case invalidUserChoice
 }
 
 // Function to retrieve log length and check for errors.
-func RetrieveLogLength(userChoice: String) throws -> Float {
+func retrieveLogLength(userChoice: String) throws -> Float {
     // Checks if index is in bound as is an int.
     guard let index = Int(userChoice), index > 0, index <= logLengths.count else {
-        throw ErrorMessages.InvalidUserChoice
+        throw ErrorMessages.invalidUserChoice
     }
     // Sets log length equal to user's choice.
     let logLength: Float = logLengths[index - 1]
@@ -44,26 +44,23 @@ func RetrieveLogLength(userChoice: String) throws -> Float {
 func main() {
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     // Prints available log lengths
-    for i in 0..<logLengths.count {
-        print("\(i + 1). \(logLengths[i])m")
+    for _ in 0..<logLengths.count {
+        print("Enter the list number of your log length: ", terminator: "")
     }
 
     // Asks user to enter a listed log length
-    print("Enter the list number of your log length: ", terminator: "")
-
-    // Gets the units of the radius from user
     let logLengthChoice = readLine() ?? ""
 
     // Try catch to find errors in user's choice'
     do {
         // Gets the chosen log length
-        logLength = try RetrieveLogLength(userChoice: logLengthChoice)
+        logLength = try retrieveLogLength(userChoice: logLengthChoice)
         // Calculates the maximum logs that can fit in the truck
         let maxLogs = Int(maxWeight / (20 * logLength))
         // Tells user how many logs can fit in the truck
         print("You can fit \(maxLogs) logs in the truck.")
         // Catches invalid user input
-    } catch ErrorMessages.InvalidUserChoice {
+    } catch ErrorMessages.invalidUserChoice {
         print("You must enter a listed length!")
         // This catch is needed to compile
     } catch {
@@ -72,4 +69,3 @@ func main() {
 }
 
 main()
-
